@@ -215,7 +215,7 @@ def get_current_folder_state(module, base_url, headers):
     else:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "get_current_folder_state"),
         )
 
     return current_state, current_explicit_attributes, current_title, etag
@@ -241,7 +241,7 @@ def set_folder_attributes(module, attributes, base_url, headers, params):
     elif info["status"] != 200:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "set_folder_attributes"),
         )
 
     return True
@@ -267,7 +267,7 @@ def create_folder(module, attributes, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "create_folder"),
         )
 
 
@@ -280,7 +280,7 @@ def delete_folder(module, base_url, headers):
     if info["status"] != 204:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "delete_folder"),
         )
 
 

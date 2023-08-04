@@ -196,7 +196,7 @@ def get_current_host_state(module, base_url, headers):
     else:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "get_current_host_state"),
         )
 
     return current_state, current_explicit_attributes, current_folder, etag
@@ -218,7 +218,7 @@ def set_host_attributes(module, attributes, base_url, headers, update_method):
     elif info["status"] != 200:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "set_host_attributes"),
         )
 
 
@@ -238,7 +238,7 @@ def move_host(module, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "move_host"),
         )
 
 
@@ -258,7 +258,7 @@ def create_host(module, attributes, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "create_host"),
         )
 
 
@@ -271,7 +271,7 @@ def delete_host(module, base_url, headers):
     if info["status"] != 204:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "delete_host"),
         )
 
 

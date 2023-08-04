@@ -258,7 +258,7 @@ def get_rules_in_ruleset(module, base_url, headers, ruleset):
     if info["status"] != 200:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "get_rules_in_ruleset"),
         )
 
     return json.loads(response.read().decode("utf-8"))
@@ -321,7 +321,7 @@ def create_rule(module, base_url, headers, ruleset, rule):
     if info["status"] != 200:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "create_rule"),
         )
 
     r = json.loads(response.read().decode("utf-8"))
@@ -349,7 +349,7 @@ def delete_rule_by_id(module, base_url, headers, rule_id):
     if info["status"] != 204:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "delete_rule_by_id"),
         )
 
 
@@ -363,7 +363,7 @@ def get_rule_etag(module, base_url, headers, rule_id):
     if info["status"] not in [200, 204]:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "get_rule_etag"),
         )
     return info["etag"]
 
@@ -397,7 +397,7 @@ def move_rule(module, base_url, headers, rule_id, location):
     if info["status"] not in [200, 204]:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "move_rule"),
         )
 
 

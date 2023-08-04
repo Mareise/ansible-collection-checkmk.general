@@ -169,7 +169,7 @@ def get_current_single_contact_group(module, base_url, headers):
     else:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "get_current_single_contact_group"),
         )
 
     return current_state, current_title, etag
@@ -229,7 +229,7 @@ def update_single_contact_group(module, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "update_single_contact_group"),
         )
 
 
@@ -276,7 +276,7 @@ def create_single_contact_group(module, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "create_single_contact_group"),
         )
 
 
@@ -313,7 +313,7 @@ def delete_single_contact_group(module, base_url, headers):
     if info["status"] != 204:
         exit_failed(
             module,
-            construct_error_message_for_failed_fetch_call(info, ""),
+            construct_error_message_for_failed_fetch_call(info, "delete_single_contact_group"),
         )
 
 
