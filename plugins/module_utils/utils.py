@@ -30,8 +30,12 @@ GENERIC_HTTP_CODES = {
     428: (False, True, "If-Match header is missing"),
 }
 
-def construct_error_message_for_failed_fetch_call(info):
-    error_template = "Error calling API."
+def construct_error_message_for_failed_fetch_call(info, error_origin):
+    if  error_origin:
+        error_template = "Error calling API from (%s)." % error_origin
+    else:
+        error_template = "Error calling API."
+    
     status_code = info.get("status")
     if status_code:
         error_template += " HTTP code: %d." % status_code

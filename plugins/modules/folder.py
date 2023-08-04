@@ -143,6 +143,7 @@ import traceback
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 from ansible.module_utils.common.dict_transformations import dict_merge
 from ansible.module_utils.urls import fetch_url
+from plugins.module_utils.utils import construct_error_message_for_failed_fetch_call
 
 if sys.version[0] == "3":
     from pathlib import Path
@@ -214,8 +215,7 @@ def get_current_folder_state(module, base_url, headers):
     else:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s."
-            % (info["status"], info.get("body", "N/A")),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
     return current_state, current_explicit_attributes, current_title, etag
@@ -241,8 +241,7 @@ def set_folder_attributes(module, attributes, base_url, headers, params):
     elif info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
     return True
@@ -268,8 +267,7 @@ def create_folder(module, attributes, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 
@@ -282,8 +280,7 @@ def delete_folder(module, base_url, headers):
     if info["status"] != 204:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 

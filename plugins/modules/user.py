@@ -163,6 +163,7 @@ import json
 
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.urls import fetch_url
+from plugins.module_utils.utils import construct_error_message_for_failed_fetch_call
 
 
 def exit_failed(module, msg):
@@ -347,8 +348,7 @@ def get_current_user_state(module, api_params):
     else:
         exit_failed(
             module,
-            "[get_current_user_state] Error calling API. HTTP code %d. Details: %s. Body: %s"
-            % (info["status"], info["body"], body),
+            construct_error_message_for_failed_fetch_call(info, "[get_current_user_state]"),
         )
 
     return extensions, current_state, etag
@@ -371,8 +371,7 @@ def set_user_attributes(module, desired_user, api_params):
     if info["status"] != 200:
         exit_failed(
             module,
-            "[set_user_attributes] Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, "[set_user_attributes]"),
         )
 
 
@@ -395,8 +394,7 @@ def create_user(module, desired_user, api_params):
     if info["status"] != 200:
         exit_failed(
             module,
-            "[create_user] Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, "[create_user]"),
         )
 
 
@@ -411,8 +409,7 @@ def delete_user(module, api_params):
     if info["status"] != 204:
         exit_failed(
             module,
-            "[delete_user] Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, "[delete_user]"),
         )
 
 

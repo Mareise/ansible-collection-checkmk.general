@@ -217,6 +217,7 @@ import json
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.common.validation import safe_eval
 from ansible.module_utils.urls import fetch_url
+from plugins.module_utils.utils import construct_error_message_for_failed_fetch_call
 
 try:
     from urllib import urlencode
@@ -257,8 +258,7 @@ def get_rules_in_ruleset(module, base_url, headers, ruleset):
     if info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
     return json.loads(response.read().decode("utf-8"))
@@ -321,8 +321,7 @@ def create_rule(module, base_url, headers, ruleset, rule):
     if info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
     r = json.loads(response.read().decode("utf-8"))
@@ -350,8 +349,7 @@ def delete_rule_by_id(module, base_url, headers, rule_id):
     if info["status"] != 204:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 
@@ -365,8 +363,7 @@ def get_rule_etag(module, base_url, headers, rule_id):
     if info["status"] not in [200, 204]:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
     return info["etag"]
 
@@ -400,8 +397,7 @@ def move_rule(module, base_url, headers, rule_id, location):
     if info["status"] not in [200, 204]:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 

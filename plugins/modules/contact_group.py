@@ -128,6 +128,7 @@ import json
 # https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/import.html
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.urls import fetch_url
+from plugins.module_utils.utils import construct_error_message_for_failed_fetch_call
 
 
 def exit_failed(module, msg):
@@ -168,8 +169,7 @@ def get_current_single_contact_group(module, base_url, headers):
     else:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s"
-            % (info["status"], info.get("body", "N/A")),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
     return current_state, current_title, etag
@@ -207,8 +207,7 @@ def get_current_contact_groups(module, base_url, headers):
     else:
         exit_failed(
             module,
-            "Error calling API in (collections). HTTP code %d. Details: %s"
-            % (info["status"], info.get("body", "N/A")),
+            construct_error_message_for_failed_fetch_call(info, "collections"),
         )
 
     return current_groups
@@ -230,8 +229,7 @@ def update_single_contact_group(module, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 
@@ -257,8 +255,7 @@ def update_contact_groups(module, base_url, groups, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API (bulk-update). HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, "bulk-update"),
         )
 
 
@@ -279,8 +276,7 @@ def create_single_contact_group(module, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 
@@ -304,8 +300,7 @@ def create_contact_groups(module, base_url, groups, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API (bulk-create). HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, "bulk-create"),
         )
 
 
@@ -318,8 +313,7 @@ def delete_single_contact_group(module, base_url, headers):
     if info["status"] != 204:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 
@@ -337,8 +331,7 @@ def delete_contact_groups(module, base_url, groups, headers):
     if info["status"] != 204:
         exit_failed(
             module,
-            "Error calling API (bulk-delete). HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, "bulk-delete"),
         )
 
 

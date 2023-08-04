@@ -150,6 +150,7 @@ import json
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.common.dict_transformations import dict_merge
 from ansible.module_utils.urls import fetch_url
+from plugins.module_utils.utils import construct_error_message_for_failed_fetch_call
 
 
 def exit_failed(module, msg):
@@ -195,8 +196,7 @@ def get_current_host_state(module, base_url, headers):
     else:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s."
-            % (info["status"], info.get("body", "N/A")),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
     return current_state, current_explicit_attributes, current_folder, etag
@@ -218,8 +218,7 @@ def set_host_attributes(module, attributes, base_url, headers, update_method):
     elif info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 
@@ -239,8 +238,7 @@ def move_host(module, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 
@@ -260,8 +258,7 @@ def create_host(module, attributes, base_url, headers):
     if info["status"] != 200:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 
@@ -274,8 +271,7 @@ def delete_host(module, base_url, headers):
     if info["status"] != 204:
         exit_failed(
             module,
-            "Error calling API. HTTP code %d. Details: %s, "
-            % (info["status"], info["body"]),
+            construct_error_message_for_failed_fetch_call(info, ""),
         )
 
 
